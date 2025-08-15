@@ -1,3 +1,5 @@
+import type {Product} from "./component/ProductCard.tsx";
+
 interface Employee{
     name:string,
     role:string,
@@ -19,7 +21,13 @@ interface AlertMessageProps {
     type: 'Warning' | 'Success' | 'error' | 'info'
 }
 
+interface ProdcutListProps{
+    products: Product[]
+}
+
 
 export type {
-    StatsCardProps,EmployeeCardProps,AlertMessageProps,Employee
+    StatsCardProps,EmployeeCardProps,AlertMessageProps,Employee,ProdcutListProps
 }
+
+

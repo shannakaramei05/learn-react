@@ -9,27 +9,31 @@ import type {Employee} from "./common-interface.ts";
 import StatsCard from "./component/StatsCard.tsx";
 import AlertMessage from "./component/AlertMessage.tsx";
 import EmployeeCard from "./component/EmployeeCard.tsx";
+import ProductListCard from "./component/ProductListCard.tsx";
 
 function App() {
-    const laptop: Product = {
-        name: "MacBook Pro",
-        price: 2499,
-        stock: 8,
-        category:"Electronics",
-        onSale:true,
-        description:"High-performance gaming laptop with RTX graphics",
-        tags: ["Apple", "Laptop", "Premium"]
-    }
 
-    const mouse: Product = {
-        name: "Logitech MX Master",
-        price: 99,
-        stock: 15,
-        category:"Accessories",
-        onSale:false,
-        description:"Comfortable wireless mouse for office work",
-        tags: ["Logitech", "Wireless", "Professional"]
-    }
+    const products : Product[] = [
+        {
+            name: "MacBook Pro",
+            price: 2499,
+            stock: 8,
+            category:"Electronics",
+            onSale:true,
+            description:"High-performance gaming laptop with RTX graphics",
+            tags: ["Apple", "Laptop", "Premium"]
+        },
+        {
+            name: "Logitech MX Master",
+            price: 99,
+            stock: 15,
+            category:"Accessories",
+            onSale:false,
+            description:"Comfortable wireless mouse for office work",
+            tags: ["Logitech", "Wireless", "Professional"]
+        }
+
+    ]
 
     const employees: Employee[] = [
         {name:"John Doe", role :"Manager", department:"Inventory"},
@@ -43,8 +47,7 @@ function App() {
           <SubWelcomeMessage/>
           <main>
               <h1>My Inventory Item</h1>
-              <ProductCard product={laptop}/>
-              <ProductCard product={mouse}/>
+              <ProductListCard products={products}/>
           </main>
 
           <h1>Dashboard!!</h1>
