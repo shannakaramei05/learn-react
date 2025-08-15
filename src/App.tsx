@@ -2,7 +2,7 @@
 import './App.css'
 import WelcomeMessage from "./component/WelcomeMessage.tsx";
 import SubWelcomeMessage from "./component/SubWelcomeMessage.tsx";
-import ProductCard, {type Product} from "./component/ProductCard.tsx";
+import {type Product} from "./component/ProductCard.tsx";
 import Header from "./component/Header.tsx";
 import Footer from "./component/Footer.tsx";
 import type {Employee} from "./common-interface.ts";
@@ -10,6 +10,10 @@ import StatsCard from "./component/StatsCard.tsx";
 import AlertMessage from "./component/AlertMessage.tsx";
 import EmployeeCard from "./component/EmployeeCard.tsx";
 import ProductListCard from "./component/ProductListCard.tsx";
+import Counter from "./hooks/Counter.tsx";
+import ProductQuantity from "./hooks/ProductQuantity.tsx";
+import SampleState from "./SampleState.tsx";
+import InteractiveProductCard from "./component/InteractiveProductCard.tsx";
 
 function App() {
 
@@ -61,9 +65,23 @@ function App() {
           <h2>Team Member</h2>
           {
               employees.map((employee:Employee, index:number    ) => (
-                  <EmployeeCard key={index} employee={employee} />
+                  <EmployeeCard key={employee.name} employee={employee} />
               ))
           }
+
+          <div className="management-hooks">
+              <h1>Management Hooks</h1>
+              <ProductQuantity/>
+          </div>
+
+          <div>
+              <SampleState/>
+          </div>
+
+          <div>
+              <InteractiveProductCard/>
+          </div>
+
           <Footer/>
       </div>
   )
