@@ -14,6 +14,8 @@ import Counter from "./hooks/Counter.tsx";
 import ProductQuantity from "./hooks/ProductQuantity.tsx";
 import SampleState from "./SampleState.tsx";
 import InteractiveProductCard from "./component/InteractiveProductCard.tsx";
+import UseEffectExample from "./hooks/UseEffectExample.tsx";
+import ProductDashboard from "./hooks/ProductDashboard.tsx";
 
 function App() {
 
@@ -82,6 +84,11 @@ function App() {
               <InteractiveProductCard/>
           </div>
 
+          <h3>UseEffect Section</h3>
+          <div>
+             {/*<UseEffectExample/>*/}
+              <ProductDashboard/>
+          </div>
           <Footer/>
       </div>
   )

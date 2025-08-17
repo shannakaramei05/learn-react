@@ -28,12 +28,14 @@ export default function InteractiveProductCard() {
         }
     }
 
-    const handleCart = () => {
-        setIsInCart(true)
-        setProduct({
-            ...product,
-            stock: product.stock - quantity
-        })
+    const handleAddToCart = () => {
+        if(quantity <= product.stock) {
+            setIsInCart(true)
+            setProduct({
+                ...product,
+                stock: product.stock - quantity
+            })
+        }
     }
 
 
@@ -47,11 +49,21 @@ export default function InteractiveProductCard() {
             <p>stock: {product.stock}</p>
 
             <p>Quantity</p>
-            <button onClick={()=>handleClick(quantity + 1)}>+</button>
-            <span>{quantity}</span>
-            <button onClick={() => handleClick(quantity-1)}>-</button>
-            <button onClick={() => handleCart}>{isInCart ? "Added to Cart" : "Add to cart"}</button>
-            <p>{product.stock === 0 ? "Out of stock" : ""}</p>
+           <div>
+               <button onClick={()=>handleClick(quantity + 1)}>+</button>
+               <span>{quantity}</span>
+               <button onClick={() => handleClick(quantity-1)}>-</button>
+           </div>
+
+            <button
+                onClick={handleAddToCart}
+                disabled={product.stock === 0 || isInCart}
+            >
+                {isInCart ? "Added to Cart" : "Add to Cart"}
+            </button>
+
+            {product.stock === 0 && <p style={{color: 'red'}}>Out of Stock!</p>}
+
         </div>
     )
 }
