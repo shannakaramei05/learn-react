@@ -16,6 +16,8 @@ import SampleState from "./SampleState.tsx";
 import InteractiveProductCard from "./component/InteractiveProductCard.tsx";
 import UseEffectExample from "./hooks/UseEffectExample.tsx";
 import ProductDashboard from "./hooks/ProductDashboard.tsx";
+import FormExample from "./form/FormExample.tsx";
+import AddProductForm from "./form/AddProductForm.tsx";
 
 function App() {
 
@@ -73,21 +75,28 @@ function App() {
 
           <div className="management-hooks">
               <h1>Management Hooks</h1>
-              <ProductQuantity/>
+            {/*  <ProductQuantity/>*/}
           </div>
 
           <div>
-              <SampleState/>
+            {/*  <SampleState/>*/}
           </div>
 
           <div>
-              <InteractiveProductCard/>
+              {/*<InteractiveProductCard/>*/}
           </div>
 
           <h3>UseEffect Section</h3>
           <div>
              {/*<UseEffectExample/>*/}
-              <ProductDashboard/>
+             {/* <ProductDashboard/>*/}
+          </div>
+
+          <h4>FORM</h4>
+          <div>
+              <FormExample/>
+              <h3>Form Product</h3>
+              <AddProductForm/>
           </div>
           <Footer/>
       </div>
