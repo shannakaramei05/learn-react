@@ -22,55 +22,69 @@ export default function AddProductForm() {
         tags:""
     })
 
-    const [errors,setErrors] = useState<Partial<ProductForm>>({})
-    const[isSubmitting,setIsSubmitting] = useState<boolean>(false)
+    const [errors, setErrors] = useState<Partial<ProductForm>>({})
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLFormElement|HTMLTextAreaElement|HTMLSelectElement>) =>{
-        console.log("test: ", e.target.value)
-        const{productName,value,type} = e.target.value
-        const checked = (e.target as HTMLInputElement).checked;
+    // Handle input changes
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
+        const { name, value, type } = e.target
+        const checked = (e.target as HTMLInputElement).checked
 
         setFormData({
             ...formData,
-            [productName]: type === 'checkbox'? checked :type ==='number' ? Number(value) :value
+            [name]: type === 'checkbox' ? checked :
+                type === 'number' ? Number(value) :
+                    value
         })
+
+        // Clear error when user starts typing
+        if (errors[name as keyof ProductForm]) {
+            setErrors({
+                ...errors,
+                [name]: undefined
+            })
+        }
     }
 
-    if(errors[name as keyof ProductForm]) {
-        setErrors({
-            ...errors,
-            [name] : undefined
-        })
-    }
+    // Form validation
+    const validateForm = (): boolean => {
+        const newErrors: Partial<ProductForm> = {}
 
-    const validateFrom = ():boolean => {
-        const newErrors : Partial<ProductForm> = {}
-        if(!formData.productName.trim()) {
-            newErrors.productName = "Product name is Required"
+        if (!formData.productName.trim()) {
+            newErrors.productName = "Product name is required"
         }
 
-        if(formData.price<=0) {
+        if (formData.price <= 0) {
             newErrors.price = "Price must be greater than 0"
         }
 
-        if(!formData.description) {
-            newErrors.description = "Please Select a category"
+        if (!formData.category) {
+            newErrors.category = "Please select a category"
         }
 
         setErrors(newErrors)
-        return Object.keys(newErrors).length ===0;
+        return Object.keys(newErrors).length === 0
     }
 
-    const handleSubmit = async (e:React.FormEvent)=> {
+    // Handle form submission
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if(!validateFrom()) {
-            return;
+
+        if (!validateForm()) {
+            return
         }
+
         setIsSubmitting(true)
-        try{
-            await new Promise(resolve =>setTimeout(resolve,1000))
+
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000))
+
             console.log("Product added:", formData)
             alert("Product added successfully!")
+
             // Reset form
             setFormData({
                 productName: "",
@@ -89,52 +103,105 @@ export default function AddProductForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="prodcut-form">
-            <h2>Add new product</h2>
+        <form onSubmit={handleSubmit} className="product-form">
+            <h2>Add New Product</h2>
+
+            {/* Product Name */}
             <div>
                 <label htmlFor="name">Product Name:</label>
-                <input type="text" id="productName" name="productName" value={formData.productName} onChange={handleInputChange} className={errors.productName ? "error" : ""}/>
+                <input
+                    type="text"
+                    id="productName"
+                    name="productName"
+                    value={formData.productName}
+                    onChange={handleInputChange}
+                    className={errors.productName ? "error" : ""}
+                />
                 {errors.productName && <span className="error-message">{errors.productName}</span>}
             </div>
+
+            {/* Price */}
             <div>
-                <label htmlFor="price">Price: </label>
-                <input type="number" id="price" name="price" value={formData.price} onChange={handleInputChange} className={errors.price ? "error" : ""}/>
+                <label htmlFor="price">Price:</label>
+                <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleInputChange}
+                    min="0"
+                    step="0.01"
+                    className={errors.price ? "error" : ""}
+                />
                 {errors.price && <span className="error-message">{errors.price}</span>}
             </div>
+
+            {/* Category */}
             <div>
-                <label htmlFor="category">category: </label>
-                <select name="caregory" id="category" value={formData.category} onChange={handleInputChange} className={errors.category ? "error" : ""}>
+                <label htmlFor="category">Category:</label>
+                <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleInputChange}
+                    className={errors.category ? "error" : ""}
+                >
                     <option value="">Select a category</option>
                     <option value="electronics">Electronics</option>
                     <option value="clothing">Clothing</option>
-                    <option value="books">books</option>
+                    <option value="books">Books</option>
                     <option value="home">Home & Garden</option>
                 </select>
                 {errors.category && <span className="error-message">{errors.category}</span>}
             </div>
+
+            {/* Description */}
             <div>
-                <label htmlFor="description">Descriptions: </label>
-                <textarea name="description" id="description" cols="30" rows="3"
-                value={formData.description} onChange={handleInputChange}></textarea>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    rows={3}
+                />
             </div>
+
+            {/* In Stock Checkbox */}
             <div>
-                <label htmlFor="stock">
-                    <input type="checkbox" name="inStock" checked={formData.inStock} onChange={handleInputChange} />
+                <label>
+                    <input
+                        type="checkbox"
+                        name="inStock"
+                        checked={formData.inStock}
+                        onChange={handleInputChange}
+                    />
                     In Stock
                 </label>
             </div>
+
+            {/* Tags */}
             <div>
-                <label htmlFor="tags">Tags(comma-seperated): </label>
-                <input type="text" id="tags" name="tags" value={formData.tags} onChange={handleInputChange} placeholder="e.q., premiuem, new, sale"/>
+                <label htmlFor="tags">Tags (comma-separated):</label>
+                <input
+                    type="text"
+                    id="tags"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleInputChange}
+                    placeholder="e.g., premium, new, sale"
+                />
             </div>
 
-            <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Adding..." : "Add Product"}</button>
+            {/* Submit Button */}
+            <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Adding..." : "Add Product"}
+            </button>
 
+            {/* Form Preview */}
             <div className="form-preview">
-                <h3>Preview: </h3>
-                <pre>
-                    {JSON.stringify(formData,null)}
-                </pre>
+                <h3>Preview:</h3>
+                <pre>{JSON.stringify(formData, null, 2)}</pre>
             </div>
         </form>
     )
